@@ -18,7 +18,6 @@ files = [f for f in files if f.find('Peaks.csv') >= 0]
 results = []
 info = []
 for file in files:
-    # data = file.spit('\\')[-2]
     df = hp.read_file(file, skip_header=8)[['Ret.Time', 'Area', 'Height']]
     info.append({'name': file.split('\\')[5], 'date': file.split('\\')[6]})
     results.append(hp.df_to_dict(df))

@@ -47,8 +47,8 @@ def doLDA(df: pd.DataFrame, df_info: pd.DataFrame):
 
     fig = px.scatter_3d(dfLDA, x='LD1', y='LD2', z='LD3',
                         color='label', hover_data=df_info.to_dict('series'))
-    fig.show()
-        # hp.save_html(fig, join(os.environ["ROOT_PATH"], 'plots'), 'LDA')
+    # fig.show()
+    hp.save_html(fig, join(os.environ["ROOT_PATH"], 'plots'), 'LDA')
     return dfLDA, lda
 
 
