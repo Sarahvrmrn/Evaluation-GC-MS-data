@@ -4,6 +4,7 @@ import plotly.express as px
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+
 from helpers import Helpers as hp
 import os
 from os.path import join
@@ -11,6 +12,7 @@ from sklearn.metrics import confusion_matrix
 
 
 def doPCA(df: pd.DataFrame, df_info: pd.DataFrame):
+    
     components_PCA = 3
     x = np.array(df)
     x = StandardScaler().fit_transform(x)
@@ -25,10 +27,10 @@ def doPCA(df: pd.DataFrame, df_info: pd.DataFrame):
     loadings = pca.components_
     num_pc = pca.n_features_
 
-    fig = px.scatter_3d(dfPCA, x='PC1', y='PC2', z='PC3',
-                        color='label', hover_data=df_info.to_dict('series'))
-    hp.save_html(fig, join(os.environ["ROOT_PATH"], 'plots'), 'PCA')
-    # fig.show()
+    # fig = px.scatter_3d(dfPCA, x='PC1', y='PC2', z='PC3',
+    #                     color='label', hover_data=df_info.to_dict('series'))
+    # hp.save_html(fig, join(os.environ["ROOT_PATH"], 'plots'), 'PCA')
+    # # fig.show()
 
     return dfPCA
 
@@ -37,6 +39,8 @@ def doLDA(df: pd.DataFrame, df_info: pd.DataFrame):
     components_LDA = 3
     x = np.array(df)
     y = df_info['name']
+    
+    print(x.shape, y.shape)
     lda = LinearDiscriminantAnalysis(n_components=components_LDA)
     linearComponents = lda.fit_transform(x, y)
 

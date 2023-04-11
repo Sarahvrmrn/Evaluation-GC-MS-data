@@ -4,3 +4,4 @@ python -m venv venv
 Set-ExecutionPolicy Unrestricted
 .\venv\Scripts\activate
 pip install -r .\requirements.txt
+python -m pip install seaborn

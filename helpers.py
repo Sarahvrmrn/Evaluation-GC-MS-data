@@ -9,6 +9,30 @@ import os
 
 class Helpers:
 
+    def concat_df(list_dfs:list[pd.DataFrame]):
+        time_axis = list_dfs[0]['time']
+        print(time_axis)
+        df = pd.concat(list_dfs, axis=1)
+        # df.set_index(df.columns[0],inplace=True)
+        df.drop(columns='time', inplace=True)
+        df.set_index(time_axis, inplace=True)
+        return df
+    
+    def round_data(data:pd.DataFrame, name:str):
+        df_round  = data.round(2)
+        df_round.set_index('Ret.Time', inplace=True)
+        data =  []
+        idx_new =[]
+        for idx in df_round.index.unique():
+           mean = df_round[df_round.index == idx].mean()[0]
+           data.append(mean)
+           idx_new.append(idx)
+        df = pd.DataFrame({'time':idx_new, name:data})
+        return df
+        
+        
+        
+    
     def df_to_dict(df: pd.DataFrame) -> dict:
         data_expanded = {}
         for col in df.columns:
@@ -17,7 +41,7 @@ class Helpers:
         return data_expanded
 
     def read_file(path: str, skip_header=0):
-        df = pd.read_csv(path, decimal='.', sep='\t', skiprows=skip_header)
+        df = pd.read_csv(path,  sep='\t', decimal='.', skiprows=skip_header)
         return df
 
     def get_all_files_in_dir_and_sub(path: str):

@@ -18,17 +18,20 @@ files = [f for f in files if f.find('Peaks.csv') >= 0]
 results = []
 info = []
 for file in files:
-    try:
-        df = hp.read_file(file, skip_header=8)[['Ret.Time', 'Area', 'Height', 'A/H']]
-        info.append({'name': file.split('\\')[5], 'date': file.split('\\')[6]})
-        results.append(hp.df_to_dict(df))
-    except:
-        print(f'cant read {file}')
-        
+    df = hp.read_file(file, skip_header=8)[['Ret.Time', 'Area', 'Height']]
+    info.append({'name': file.split('\\')[5], 'date': file.split('\\')[6]})
+    results.append(df)
+    
+print(results)
 df = pd.DataFrame(results)
+
+df['merged_col'] = df['Ret.Time'] + ',' + df['Area'] + ',' + df['Height']
+print(df)
+exit()
 hp.save_df(df, join(os.environ["ROOT_PATH"], 'data'), 'extracted_features' )
 df_info = pd.DataFrame(info)
 hp.save_df(df_info, join(os.environ["ROOT_PATH"], 'data'), 'extracted_features_info' )
+
 df_PC = doPCA(df, df_info)
 dfLDA = doLDA(df, df_info)
 loo_cv(df, df_info)

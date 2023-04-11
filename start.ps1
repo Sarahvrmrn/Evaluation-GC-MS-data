@@ -1,4 +1,4 @@
 
 
 .\venv\Scripts\activate
-PY main.py
+PY .\main2.py
