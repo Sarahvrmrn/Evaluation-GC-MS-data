@@ -62,7 +62,9 @@ def loo_cv(df: pd.DataFrame, df_info: pd.DataFrame) -> float:
         label_test = df_info.iloc[i]
 
         df_train = np.array(df.drop(df.index[i]))
-        label_train = df_info.drop(i)
+        label_train = df_info.drop(i) #################################
+        ######################################
+        ###############################
         # ['name'].to_list()
 
         lda.fit_transform(df_train, label_train)
